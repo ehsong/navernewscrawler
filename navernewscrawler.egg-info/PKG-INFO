@@ -1,0 +1,185 @@
+Metadata-Version: 2.1
+Name: navernewscrawler
+Version: 0.0.3
+Summary: Tool for crawling news on Naver
+Home-page: https://github.com/ehsong/navernewscrawler
+Author: ['Eunhou Esther Song']
+Author-email: eunhou.song@gmail.com
+License: MIT
+Description: Naver News Crawler
+        ------------------
+        
+        소개
+        ----
+        
+        검색어와 시작 날짜 및 마지막 날짜를 입력하여 네이버 포탈에 게시된 뉴스를
+        스크래이핑 하는 스크립트이다. 네이버 포탈에 게시된 뉴스는
+        <a href="http://news.naver.com" class="uri">http://news.naver.com</a>
+        으로 시작하며, 이 뉴스들 외의 뉴스는 스크래이핑 하지 않는다.
+        
+        동기
+        ----
+        
+        뉴스를 다양한 목적을 위해서 스크래이핑 하고자하는 수요가 늘었다. 다만,
+        현존하는 스크립트는 특정 기간 안의 뉴스를 스크래이핑 할 수 없다. 이
+        스크립트는 현존하는 스크립트를 개선, 보완하여 날짜 및 결과물의 페이지
+        수를 지정할 수 있게 하였다. 가령 2018-12-26일 ’독도’에 대한 뉴스 검색을
+        하였을때, 결과물의 시작 페이지와 마지막 페이지를 지정해서 스크레이핑 할
+        수 있으며, 날짜 기간 또한 지정할 수 있다 (예: 2018-12-26 부터 2018-12-30
+        까지).
+        
+        결과물은 뉴스의 제목, 뉴스 회사, 날짜, 테스트 네가지이다.
+        
+        설치
+        ----
+        
+        이 스크립트는 python 3.7에서만 지원된다.
+        
+            (sudo) pip3 install navernewscrawler
+        
+        혹은 repository에서 setup.py을 복사하여 직접 입력한다.
+        
+            python3.7 setup.py install
+        
+        커맨드어 정리
+        -------------
+        
+        -   -h 혹은 –help: help message를 볼 수 있다.
+        -   -bd 혹은 –begindate: 스크래이핑 시작 날짜를 지정한다. 년도, 월, 일은
+            ’-’으로 구분한다. 예: 2018-12-26, 2018-06-19
+        -   -ed 혹은 –enddate: 스크래이핑 마지막 날짜를 지정한다.
+        -   -p 혹은 –page: 뉴스 결과 페이지 중 스크래이핑 할 첫 페이지를
+            지정한다. 디폴트는 페이지 1이다.
+        -   -max\_page 혹은 –max\_page: 뉴스 결과 페이지 중 마지막 페이지를
+            지정한다. 디폴트는 페이지 5이다. 한 페이지 당 10건의 뉴스결과를 볼
+            수 있기 때문에, 하루에 50건의 뉴스를 스크래이핑 한다.
+        -   -c 혹은 –csv: 스크래이핑 결과를 CSV파일에 저장한다.
+        -   -d 혹은 –dump: 스크래이핑 결과를 콘솔에 보여준다.
+        
+        예시
+        ----
+        
+        -   커맨드 입력시 기본으로 시작날짜\_news\_scrape\_마지막날짜.json
+            파일로 저장된다. 예를 들어 2018년12월26일부터 2019년12월26일까지의
+            뉴스를 스크래이핑 하면 결과는
+            20181226\_news\_scrape\_20191226.json으로 저장된다.
+        
+        -   2018-12-26, 2018-12-27 이틀 동안 독도와 관련된 뉴스를 결과물 페이지
+            1에서 3까지 스크래이핑 한다.
+        
+        <!-- -->
+        
+            navernewscrawler 독도 -bd 2018-12-26 -ed 2018-12-27 -p 1 -max_page 3 
+        
+        -   2018-12-26 하루 동안 독도와 관련된 뉴스를 결과물 페이지 1에서 3까지
+            스크래이핑 한다. 결과는 csv 파일로 저장한다.
+        
+        <!-- -->
+        
+            navernewscrawler 독도 -bd 2018-12-26 -ed 2018-12-26 -p 1 -max_page 3 -c
+        
+        결과물
+        ------
+        
+            [{'title': '우리나라 국회의원들, 일본에서 보낸 독도 방문 항의 서한 반송해',
+              'date': '2018-12-26 ',
+              'company': 'YTN',
+              'text': '지난 10월 22일 독도를 방문한 국회 교육위원회 소속 의원들이 일본 자민당 소속 중의원 등이 보낸 항의 서한을 되돌려보낸 사실이 뒤늦게 알려졌다.일본 언론에 따르면, 일본 자민당 소속 중의원이자 \'일본 영토를 지키기 위해 행동하는 의원 연맹\' 소속 신도 요시타카 의원은 25일 기자회견을 열어 한국 국회의원들이 반송한 서한을 공개했다.\'일본 영토를 지키기 위한 의원 연맹\'은 "독도가 한국 땅인 근거를 대라"는 내용을 담은 항의서한 13통 중 10통은 뜯어진 채로, 나머지는 봉투 없이, 다른 한 통은 반송되지 않았다고 밝혔다.지난 10월, 독도를 방문했던 국회 교육의원이었던 이찬열 바른미래당 의원은 독도 방문 후에 이미 항의 서한을 받지 않겠다는 의지를 표명한 바 있다. 이찬열 의원은 독도가 우리 땅인 근거를 대라는 질문에 대해 "답변할 이유가 없다"고 잘라 말하기도 했다.이찬열 의원은 CBS와의 인터뷰에서 "(반대로) 당신들이 독도가 일본 땅이라고 주장하는 근거를 대봐라"라며 "일본이 군국주의의 야심만 드러내고 있다"고 말한 바 있다.[사진 = 일본 영토를 지키기 위해 행동하는 의원 연맹, 이찬열 의원 트위터]YTN PLUS 최가영 기자 (weeping07@ytnplus.co.kr)  ▶ 24시간 실시간 뉴스 생방송 보기  ▶ 네이버 메인에서 YTN을 구독해주세요! [저작권자(c) YTN & YTN PLUS 무단전재 및 재배포 금지]'},
+             {'title': "日의원이 韓의원에 보낸 '독도 영유권' 질문서 반송",
+              'date': '2018-12-26 ',
+              'company': '연합뉴스',
+              'text': '(도쿄=연합뉴스) 김정선 특파원 = 일본 여야 의원들로 구성된 모임이 지난 10월 독도를 방문한 우리나라 국회의원들에게 한국의 독도 영유권 주장 근거를 제시하라며 보냈던 공개질문서가 반송된 것으로 나타났다.     26일 NHK 등에 따르면 \'일본 영토를 지키기 위해 행동하는 의원연맹\'(이하 의원연맹)의 신도 요시타카(新藤義孝·자민당) 회장은 전날 기자회견에서 지난달 발송한 질문서가 그대로 반송됐다고 밝혔다.     의원연맹은 지난 10월 22일 한국의 국회 교육위원회 소속 의원들이 독도를 방문하자 다음 달 이를 용납할 수 없다며 한국 측의 영유권 근거 등을 제시하라는 질문서를 보냈다. \'독도는 우리땅\'(서울=연합뉴스) 김주성 기자 = 일본 시마네(島根)현이 \'다케시마(竹島·일본이 주장하는 독도 명칭)의 날\' 행사를 주최한 2017년 2월 22일 오후 서울 종로구 주한일본대사관 옛터 앞에서 나라살리기국민운동본부 참가 학생들이 일본의 독도 침탈 야욕을 규탄한 뒤 만세삼창을 하고 있다. 2017.2.22 utzza@yna.co.kr    의원연맹은 한국 국회의원 13명에게 질문서를 보냈지만 12통이 반송됐다고 산케이신문은 전했다.     신도 회장은 기자회견에서 질문서가 반송된 것에 대해 "매우 유감"이라며 "독선적 행동밖에 하지 않는 국가의 미래는 매우 걱정스럽다"고 주장했다.    신도 의원은 "한일관계는 다케시마(竹島·일본이 주장하는 독도의 명칭) 문제가 근원에 박혀 있어 이것이 빠지지 않는 한 진정한 신뢰로는 이어지지 않을 것"이라고 말했다고 방송은 덧붙였다.     jsk@yna.co.kr▶뭐 하고 놀까? #흥  ▶쇼미더뉴스! 오늘 많이 본 뉴스영상 ▶네이버 홈에서 [연합뉴스] 채널 구독하기'}]
+        
+        ### Json 파일 읽기
+        
+            import codecs
+            import json
+            with codecs.open('파일이름.json', 'r', 'utf-8') as f:
+                news = json.load(f, encoding='utf-8')
+        
+        Introduction
+        ------------
+        
+        This is a script that scrapes Naver news results of a query word(s). The
+        scraped results only include news published on naver news portal, which
+        begins with url
+        <a href="http://news.naver.com" class="uri">http://news.naver.com</a>.
+        This tool does not scrape results that do not begin with this url.
+        
+        The scraped results include the title, text, date, and the media source.
+        
+        Motivation
+        ----------
+        
+        There has been rise in demand for scraping news online, yet there has
+        not been a proper tool that allows scraping Korean news online. This
+        tool allows users to scrape news published on Naver, one of the largest
+        web portals in South Korea. Pre-existing tools only allow crawling a
+        single query result that does not allow collection of new results over
+        time. This tool allows collection of news published on Naver over a
+        period of time, and also provides the user with the option to limit the
+        scrape results per date. For instance, news results per day may reach
+        more than 40,000 page results, but the user can limit the scope by
+        setting the starting page and the ending page using command line
+        options.
+        
+        Installation
+        ------------
+        
+        This script only runs on Python 3.7.
+        
+            (sudo) pip3 install navernewscrawler
+        
+        Or you can download setup.py and directly install the file.
+        
+            python3.7 setup.py install
+        
+        Commands
+        --------
+        
+        -   -h or –help: See the help message
+        -   -bd or –begindate: Set the begin date in ‘Y-M-D’ format. ex:
+            2018-12-26, 2018-06-19. The default is 2018-12-26.
+        -   -ed or –enddate: Set the end date. The default is 2018-12-26.
+        -   -p or –page: Out of all news results, set the starting page. Default
+            is 1.
+        -   -max\_page or –max\_page: Out of all news results, set the end page.
+            Default is 5.
+        -   -c or –csv: Save the scraped results to CSV file.
+        -   -d or –dump: Show the scraped results in console.
+        
+        Example
+        -------
+        
+        -   The default setting is that the output is stored in .json format.
+            The name of the file is ‘start date\_news\_scrape\_end date’. ex:
+            20181226\_news\_scrape\_20191226.json
+        
+        -   Below scrapes the news results querying ‘독도’(Dokdo Island) for two
+            days: 2018-12-26 and 2018-12-27
+        
+        <!-- -->
+        
+            navernewscrawler 독도 -bd 2018-12-26 -ed 2018-12-27 -p 1 -max_page 3 
+        
+        -   Below scrapes the news results querying ‘독도’(Dokdo Island) for one
+            day: 2018-12-26, and stores the results to CSV file.
+        
+        <!-- -->
+        
+            navernewscrawler 독도 -bd 2018-12-26 -ed 2018-12-26 -p 1 -max_page 3 -c
+        
+        Results
+        -------
+        
+            [{'title': '우리나라 국회의원들, 일본에서 보낸 독도 방문 항의 서한 반송해',
+              'date': '2018-12-26 ',
+              'company': 'YTN',
+              'text': '지난 10월 22일 독도를 방문한 국회 교육위원회 소속 의원들이 일본 자민당 소속 중의원 등이 보낸 항의 서한을 되돌려보낸 사실이 뒤늦게 알려졌다.일본 언론에 따르면, 일본 자민당 소속 중의원이자 \'일본 영토를 지키기 위해 행동하는 의원 연맹\' 소속 신도 요시타카 의원은 25일 기자회견을 열어 한국 국회의원들이 반송한 서한을 공개했다.\'일본 영토를 지키기 위한 의원 연맹\'은 "독도가 한국 땅인 근거를 대라"는 내용을 담은 항의서한 13통 중 10통은 뜯어진 채로, 나머지는 봉투 없이, 다른 한 통은 반송되지 않았다고 밝혔다.지난 10월, 독도를 방문했던 국회 교육의원이었던 이찬열 바른미래당 의원은 독도 방문 후에 이미 항의 서한을 받지 않겠다는 의지를 표명한 바 있다. 이찬열 의원은 독도가 우리 땅인 근거를 대라는 질문에 대해 "답변할 이유가 없다"고 잘라 말하기도 했다.이찬열 의원은 CBS와의 인터뷰에서 "(반대로) 당신들이 독도가 일본 땅이라고 주장하는 근거를 대봐라"라며 "일본이 군국주의의 야심만 드러내고 있다"고 말한 바 있다.[사진 = 일본 영토를 지키기 위해 행동하는 의원 연맹, 이찬열 의원 트위터]YTN PLUS 최가영 기자 (weeping07@ytnplus.co.kr)  ▶ 24시간 실시간 뉴스 생방송 보기  ▶ 네이버 메인에서 YTN을 구독해주세요! [저작권자(c) YTN & YTN PLUS 무단전재 및 재배포 금지]'},
+             {'title': "日의원이 韓의원에 보낸 '독도 영유권' 질문서 반송",
+              'date': '2018-12-26 ',
+              'company': '연합뉴스',
+              'text': '(도쿄=연합뉴스) 김정선 특파원 = 일본 여야 의원들로 구성된 모임이 지난 10월 독도를 방문한 우리나라 국회의원들에게 한국의 독도 영유권 주장 근거를 제시하라며 보냈던 공개질문서가 반송된 것으로 나타났다.     26일 NHK 등에 따르면 \'일본 영토를 지키기 위해 행동하는 의원연맹\'(이하 의원연맹)의 신도 요시타카(新藤義孝·자민당) 회장은 전날 기자회견에서 지난달 발송한 질문서가 그대로 반송됐다고 밝혔다.     의원연맹은 지난 10월 22일 한국의 국회 교육위원회 소속 의원들이 독도를 방문하자 다음 달 이를 용납할 수 없다며 한국 측의 영유권 근거 등을 제시하라는 질문서를 보냈다. \'독도는 우리땅\'(서울=연합뉴스) 김주성 기자 = 일본 시마네(島根)현이 \'다케시마(竹島·일본이 주장하는 독도 명칭)의 날\' 행사를 주최한 2017년 2월 22일 오후 서울 종로구 주한일본대사관 옛터 앞에서 나라살리기국민운동본부 참가 학생들이 일본의 독도 침탈 야욕을 규탄한 뒤 만세삼창을 하고 있다. 2017.2.22 utzza@yna.co.kr    의원연맹은 한국 국회의원 13명에게 질문서를 보냈지만 12통이 반송됐다고 산케이신문은 전했다.     신도 회장은 기자회견에서 질문서가 반송된 것에 대해 "매우 유감"이라며 "독선적 행동밖에 하지 않는 국가의 미래는 매우 걱정스럽다"고 주장했다.    신도 의원은 "한일관계는 다케시마(竹島·일본이 주장하는 독도의 명칭) 문제가 근원에 박혀 있어 이것이 빠지지 않는 한 진정한 신뢰로는 이어지지 않을 것"이라고 말했다고 방송은 덧붙였다.     jsk@yna.co.kr▶뭐 하고 놀까? #흥  ▶쇼미더뉴스! 오늘 많이 본 뉴스영상 ▶네이버 홈에서 [연합뉴스] 채널 구독하기'}]
+        
+Platform: UNKNOWN
+Description-Content-Type: text/markdown
