@@ -1,6 +1,8 @@
 Naver News Crawler
 ------------------
 
+Copyright (c) 2018-2019 Eunhou Esther Song
+
 ### Python Package Index
 
 <a href="https://pypi.org/project/navernewscrawler/" class="uri">https://pypi.org/project/navernewscrawler/</a>
