@@ -20,7 +20,8 @@ def get_news(n_url):
     list
     """
     news_detail = []
-    breq = requests.get(n_url)
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'}
+    breq = requests.get(n_url, headers=headers)
     bsoup = BeautifulSoup(breq.content, 'html.parser')
     title = bsoup.select('h3#articleTitle')[0].text
     news_detail.append(title)
@@ -97,10 +98,10 @@ def output(query,page,max_page,start_date,end_date):
             req = requests.get(url,headers=header)
             cont = req.content
             soup = BeautifulSoup(cont, 'html.parser')
-            for urls in soup.select("._sp_each_url"):
+            for url in soup.find_all('a', href=True):
                 try:
-                    if urls["href"].startswith("https://news.naver.com"):
-                        news_detail = get_news(urls["href"])
+                    if url['href'].startswith('https://news.naver.com'):
+                        news_detail = get_news(url["href"])
                         adict = dict()
                         adict["title"] = news_detail[0]
                         adict["date"] = news_detail[1]
